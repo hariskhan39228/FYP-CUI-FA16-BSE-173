@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="View Profile"
+        android:id="@+id/main_view_Profile_option"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:title="Create Board"
+        android:id="@+id/main_create_board_option"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:title="Logout"
+        android:id="@+id/main_log_out_option"
+        app:showAsAction="never">
+    </item>
+
+</menu>

@@ -1,0 +1,79 @@
+package com.example.icebuild2;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.TextClock;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
+
+public class MainDrawerActivity extends AppCompatActivity {
+    private Toolbar mToolbar;
+    private DrawerLayout drawer;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_drawer);
+
+        mToolbar=(Toolbar)findViewById(R.id.toolbar_nav);
+        setSupportActionBar(mToolbar);
+        String boardName=getIntent().getStringExtra("BoardName");
+        getSupportActionBar().setTitle(boardName);
+
+        Toast.makeText(this, boardName, Toast.LENGTH_SHORT).show();
+        /*TextView navBoardName=(TextView)findViewById(R.id.nav_board_name);
+        navBoardName.setText(boardName);*/
+
+        drawer=(DrawerLayout)findViewById(R.id.drawer_layout);
+        NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.nav_documents:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                new DocumentsFragment()).commit();
+                        break;
+                    case R.id.nav_requests:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                new RequestsFragment()).commit();
+                        break;
+                    case R.id.nav_members:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                new MembersFragment()).commit();
+                        break;
+                }
+                return false;
+            }
+        });
+
+        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawer,mToolbar,
+                R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        if(savedInstanceState==null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new DocumentsFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_documents);
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
+    }
+}

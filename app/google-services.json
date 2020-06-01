@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "294170017091",
+    "firebase_url": "https://ice-build-2.firebaseio.com",
+    "project_id": "ice-build-2",
+    "storage_bucket": "ice-build-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294170017091:android:80c9305dfcd594a77683f6",
+        "android_client_info": {
+          "package_name": "com.example.icebuild2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294170017091-138v0nhqlqal545sp3s55ep3oacphjkr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.icebuild2",
+            "certificate_hash": "9af2af10f58a320ce5061fa4df3250c9c8df2696"
+          }
+        },
+        {
+          "client_id": "294170017091-ebetur1d865cb8njnuad98vo53jikatv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc7y_hj8Z20CnH8nlhW5XWm2PbBNSMlqo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294170017091-ebetur1d865cb8njnuad98vo53jikatv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
