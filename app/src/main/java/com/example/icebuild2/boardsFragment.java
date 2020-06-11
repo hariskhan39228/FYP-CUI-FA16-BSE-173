@@ -53,8 +53,6 @@ public class boardsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ////////////////////////////////////////////////////////////////////////////////////////////
-        MainActivity activity=(MainActivity) getActivity();
-        UserType=activity.getUserType();
         Toast.makeText(getContext(), "Check 0 : "+UserType, Toast.LENGTH_SHORT).show();
         ////////////////////////////////////////////////////////////////////////////////////////////
         boardsFragmentView= inflater.inflate(R.layout.fragment_boards, container, false);
@@ -63,6 +61,13 @@ public class boardsFragment extends Fragment {
         mAuth=FirebaseAuth.getInstance();
         usersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         boardMembersRef= FirebaseDatabase.getInstance().getReference().child("Board Members");
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        String email=mAuth.getCurrentUser().getEmail();
+        if(email.contains("-")){
+            UserType="Student";
+        }else {
+            UserType="Teacher";
+        }
         ////////////////////////////////////////////////////////////////////////////////////////////
         usersRef.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -156,6 +161,5 @@ public class boardsFragment extends Fragment {
             arrayAdapter.notifyDataSetChanged();
         }
     }
-
 
 }

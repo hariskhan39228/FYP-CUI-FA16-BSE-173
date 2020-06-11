@@ -30,6 +30,8 @@ public class StudentActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private DatabaseReference rootRef;
+    String CreatorName="";
+    String CreatorProfileImage="";
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,11 @@ public class StudentActivity extends AppCompatActivity {
         myTabLayout=(TabLayout)findViewById(R.id.student_tabs);
         myTabLayout.setupWithViewPager(myViewPager);
         ////////////////////////////////////////////////////////////////////////////////////////////
+        if (currentUser == null) {
+            sendUserToLoginActivity();
+        }else{
+            verifyUserExistence();
+        }
     }
 
     @Override

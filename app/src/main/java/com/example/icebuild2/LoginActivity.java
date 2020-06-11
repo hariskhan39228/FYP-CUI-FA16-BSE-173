@@ -95,11 +95,13 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    intent.putExtra("UserType",UserType);
                                     startActivity(intent);
                                 }else{
                                     Intent intent=new Intent(LoginActivity.this, StudentActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    intent.putExtra("UserType",UserType);
                                     startActivity(intent);
                                 }
 
