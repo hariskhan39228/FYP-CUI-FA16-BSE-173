@@ -65,6 +65,7 @@ public class DocumentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         DocumentsFragmentView=inflater.inflate(R.layout.fragment_documents, container, false);
+        initializeFields();
         ////////////////////////////////////////////////////////////////////////////////////////////
         currentBoardName=getActivity().getIntent().getStringExtra("BoardName");
         mAuth= FirebaseAuth.getInstance();
@@ -73,7 +74,7 @@ public class DocumentsFragment extends Fragment {
         usersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         boardNameRef=FirebaseDatabase.getInstance().getReference().child("Board Documents").child(currentBoardName);
         ////////////////////////////////////////////////////////////////////////////////////////////
-        initializeFields();
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         getUserInfo();
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,10 +97,11 @@ public class DocumentsFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Toast.makeText(getContext(), "check 2 into onStart", Toast.LENGTH_SHORT).show();
+
                 Messages messages = dataSnapshot.getValue(Messages.class);
                 messagesList.add(messages);
-
                 messageAdapter.notifyDataSetChanged();
+                usermessageList.smoothScrollToPosition(usermessageList.getAdapter().getItemCount());
             }
 
             @Override
@@ -127,9 +129,10 @@ public class DocumentsFragment extends Fragment {
         displayTextMessages=(TextView)DocumentsFragmentView.findViewById(R.id.boards_docs_text_display);
         mScrollView=(ScrollView)DocumentsFragmentView.findViewById(R.id.docs_scroll_view);
 
-        messageAdapter = new MessageAdapter(messagesList);
         usermessageList = (RecyclerView)DocumentsFragmentView.findViewById(R.id.board_messages_list);
+        messageAdapter = new MessageAdapter(messagesList);
         linearLayoutManager = new LinearLayoutManager(getContext());
+        usermessageList.setLayoutManager(linearLayoutManager);
         usermessageList.setAdapter(messageAdapter);
 
     }
