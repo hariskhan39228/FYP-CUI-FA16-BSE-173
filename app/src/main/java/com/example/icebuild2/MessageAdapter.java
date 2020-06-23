@@ -1,5 +1,6 @@
 package com.example.icebuild2;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("image")){
                     String recieverImage = dataSnapshot.child("image").getValue().toString();
-                    Picasso.get().load(recieverImage).placeholder(R.drawable.profile_image).into(holder.recieverProfileImage);
+                    Picasso.with(holder.recieverProfileImage.getContext()).load(recieverImage).placeholder(R.drawable.profile_image).into(holder.recieverProfileImage);
                 }
             }
 
@@ -80,12 +81,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             holder.recieverMessageText.setVisibility(View.INVISIBLE);
             holder.recieverProfileImage.setVisibility(View.INVISIBLE);
+            holder.senderMessageText.setVisibility(View.INVISIBLE);
 
             if(fromUserID==messageSenderID){
+                holder.senderMessageText.setVisibility(View.VISIBLE);
                 holder.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
                 holder.senderMessageText.setText(messages.getMessage()+"  hello");
             }else{
-                holder.senderMessageText.setVisibility(View.INVISIBLE);
+
                 holder.recieverMessageText.setVisibility(View.VISIBLE);
                 holder.recieverProfileImage.setVisibility(View.VISIBLE);
 

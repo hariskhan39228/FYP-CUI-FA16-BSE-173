@@ -14,9 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class LoginActivity extends AppCompatActivity {
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -27,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     ////////////////////////////////////////////////////////////////////////////////////////////////
     private FirebaseAuth mAuth;
+    private DatabaseReference usersRef;
     ////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         initializeFields();
         ////////////////////////////////////////////////////////////////////////////////////////////
         mAuth=FirebaseAuth.getInstance();
+        usersRef= FirebaseDatabase.getInstance().getReference().child("Users");
         ////////////////////////////////////////////////////////////////////////////////////////////
         signUpLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,19 +97,26 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             loadingBar.dismiss();
                             if(mAuth.getCurrentUser().isEmailVerified()){
-                                if(UserType=="teacher"){
-                                    Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    intent.putExtra("UserType",UserType);
-                                    startActivity(intent);
-                                }else{
-                                    Intent intent=new Intent(LoginActivity.this, StudentActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    intent.putExtra("UserType",UserType);
-                                    startActivity(intent);
-                                }
+                                String currentUserID=mAuth.getCurrentUser().getUid();
+                                String deviceToken= FirebaseInstanceId.getInstance().getToken();
+                                usersRef.child(currentUserID).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        if(UserType=="teacher"){
+                                            Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            intent.putExtra("UserType",UserType);
+                                            startActivity(intent);
+                                        }else{
+                                            Intent intent=new Intent(LoginActivity.this, StudentActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            intent.putExtra("UserType",UserType);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
 
                             }else{
                                 Toast.makeText(LoginActivity.this, "Please verify your Email first.", Toast.LENGTH_SHORT).show();

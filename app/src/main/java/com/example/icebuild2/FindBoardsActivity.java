@@ -58,7 +58,7 @@ public class FindBoardsActivity extends AppCompatActivity {
                 holder.boardsName.setText(model.getName());
                 holder.creatorName.setText(model.getCreator());
                 holder.boardsClass.setText(model.getBoardClass());
-                Picasso.get().load(model.getImage()).placeholder(R.drawable.profile_image).into(holder.profileImage);
+                Picasso.with(FindBoardsActivity.this).load(model.getImage()).placeholder(R.drawable.profile_image).into(holder.profileImage);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

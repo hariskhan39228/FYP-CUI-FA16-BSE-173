@@ -105,7 +105,7 @@ public class MembersFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.hasChild("image")) {
                             final String memberUserImage = dataSnapshot.child("image").getValue().toString();
-                            Picasso.get().load(memberUserImage).into(holder.memberProfileImage);
+                            Picasso.with(getContext()).load(memberUserImage).into(holder.memberProfileImage);
                         }
                         final String memberUserName = dataSnapshot.child("name").getValue().toString();
                         final String memberUserEmail = dataSnapshot.child("email").getValue().toString();

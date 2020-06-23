@@ -79,7 +79,7 @@ public class RequestsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final RequestsViewHolder holder, int position, @NonNull Users users) {
                 final String listUserID = getRef(position).getKey();
-                DatabaseReference getTypeRef = getRef(position).child("request_type").getRef();
+                final DatabaseReference getTypeRef = getRef(position).child("request_type").getRef();
                 getTypeRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -91,7 +91,7 @@ public class RequestsFragment extends Fragment {
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.hasChild("image")) {
                                             final String requestUserImage = dataSnapshot.child("image").getValue().toString();
-                                            Picasso.get().load(requestUserImage).into(holder.profileImage);
+                                            Picasso.with(getContext()).load(requestUserImage).into(holder.profileImage);
                                         }
                                         final String requestUserName = dataSnapshot.child("name").getValue().toString();
                                         final String requestUserEmail = dataSnapshot.child("email").getValue().toString();

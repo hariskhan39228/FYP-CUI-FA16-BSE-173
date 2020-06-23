@@ -243,7 +243,7 @@ public class SettingsActivity extends AppCompatActivity {
                     String retrievedUserName = dataSnapshot.child("name").getValue().toString();
                     String retrievedProfileImage=dataSnapshot.child("image").getValue().toString();
                     userName.setText(retrievedUserName);
-                    Picasso.get().load(retrievedProfileImage).into(userProfileImage);
+                    Picasso.with(SettingsActivity.this).load(retrievedProfileImage).into(userProfileImage);
 
                 }else if((dataSnapshot.exists())&&(dataSnapshot.hasChild("name"))){
                     String retrievedUserName = dataSnapshot.child("name").getValue().toString();

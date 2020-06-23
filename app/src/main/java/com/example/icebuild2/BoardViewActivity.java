@@ -33,7 +33,7 @@ public class BoardViewActivity extends AppCompatActivity {
     private TextView boardName, boardClass, boardTeacher;
     private Button sendJoinRequestButton;
 
-    private DatabaseReference boardsRef, usersRef, joinRequestsRef;
+    private DatabaseReference boardsRef, NotificationRef, joinRequestsRef;
     private FirebaseAuth mAuth;
 
     @Override
@@ -43,7 +43,7 @@ public class BoardViewActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////////////////////////////////////
         mAuth=FirebaseAuth.getInstance();
         boardsRef= FirebaseDatabase.getInstance().getReference().child("Boards");
-        usersRef= FirebaseDatabase.getInstance().getReference().child("Users");
+        NotificationRef= FirebaseDatabase.getInstance().getReference().child("Notifications");
         joinRequestsRef= FirebaseDatabase.getInstance().getReference().child("Join Requests");
         ////////////////////////////////////////////////////////////////////////////////////////////
         receiverBoardID =getIntent().getStringExtra("visit_board_id");
@@ -89,7 +89,7 @@ public class BoardViewActivity extends AppCompatActivity {
                     String retrievedBoardTeacher = dataSnapshot.child("creator").getValue().toString();
                     recieverUserID = dataSnapshot.child("creator_id").getValue().toString();
 
-                    Picasso.get().load(retrievedProfileImage).placeholder(R.drawable.profile_image).into(boardProfileImage);
+                    Picasso.with(BoardViewActivity.this).load(retrievedProfileImage).placeholder(R.drawable.profile_image).into(boardProfileImage);
                     boardName.setText(retrievedBoardName);
                     boardClass.setText("Class : "+retrievedBoardClass);
                     boardTeacher.setText("Teacher : "+retrievedBoardTeacher);
@@ -195,12 +195,23 @@ public class BoardViewActivity extends AppCompatActivity {
                 Map<String, Object > requestUpdates = new HashMap<>();
                 requestUpdates.put(senderUserID, requestValues);
 
+
                 joinRequestsRef.child(recieverUserID).child(receiverBoardID).updateChildren(requestUpdates).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        sendJoinRequestButton.setEnabled(true);
-                        currentState="request_sent";
-                        sendJoinRequestButton.setText("Cancel join Request");
+                        HashMap <String,String> BoardJoinNotificationMap=new HashMap<>();
+                        BoardJoinNotificationMap.put("from",senderUserID);
+                        BoardJoinNotificationMap.put("type","request");
+                        NotificationRef.child(recieverUserID).push().setValue(BoardJoinNotificationMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                sendJoinRequestButton.setEnabled(true);
+                                currentState="request_sent";
+                                sendJoinRequestButton.setText("Cancel join Request");
+                            }
+                        });
+
+
                     }
                 });
             }
