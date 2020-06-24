@@ -1,9 +1,12 @@
 package com.example.icebuild2;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public class MessageViewHolder extends RecyclerView.ViewHolder{
         public TextView senderMessageText, recieverMessageText;
         public CircleImageView recieverProfileImage;
+        public ImageView messageSenderPicture, messageReceiverPicture;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -42,6 +46,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             senderMessageText=(TextView)itemView.findViewById(R.id.sender_message_text);
             recieverMessageText=(TextView)itemView.findViewById(R.id.receiver_message_text);
             recieverProfileImage=(CircleImageView)itemView.findViewById(R.id.message_profile_image);
+            messageSenderPicture=itemView.findViewById(R.id.message_sender_image_view);
+            messageReceiverPicture=itemView.findViewById(R.id.message_receiver_image_view);
         }
     }
 
@@ -56,7 +62,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MessageViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MessageViewHolder holder, final int position) {
         String messageSenderID=mAuth.getCurrentUser().getUid();
         Messages messages = userMessagesList.get(position);
         String type=messages.getType();
@@ -77,23 +83,60 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
             }
         });
+
+        holder.recieverMessageText.setVisibility(View.GONE);
+        holder.recieverProfileImage.setVisibility(View.GONE);
+        holder.senderMessageText.setVisibility(View.GONE);
+        holder.messageReceiverPicture.setVisibility(View.GONE);
+        holder.messageSenderPicture.setVisibility(View.GONE);
+
         if(type.equals("text")){
-
-            holder.recieverMessageText.setVisibility(View.INVISIBLE);
-            holder.recieverProfileImage.setVisibility(View.INVISIBLE);
-            holder.senderMessageText.setVisibility(View.INVISIBLE);
-
             if(fromUserID==messageSenderID){
                 holder.senderMessageText.setVisibility(View.VISIBLE);
                 holder.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
-                holder.senderMessageText.setText(messages.getMessage()+"  hello");
+                holder.senderMessageText.setText(messages.getMessage()+ "\n \n"+ messages.getDate()+" - "+messages.getTime());
             }else{
 
                 holder.recieverMessageText.setVisibility(View.VISIBLE);
                 holder.recieverProfileImage.setVisibility(View.VISIBLE);
 
                 holder.recieverMessageText.setBackgroundResource(R.drawable.reciever_messages_layout);
-                holder.recieverMessageText.setText(messages.getMessage()+"  hello");
+                holder.recieverMessageText.setText(messages.getMessage()+ "\n \n"+ messages.getDate()+" - "+messages.getTime());
+            }
+        }else if(type.equals("image")){
+            if(fromUserID==messageSenderID){
+                holder.messageSenderPicture.setVisibility(View.VISIBLE);
+                Picasso.with(holder.messageSenderPicture.getContext()).load(messages.getMessage()).into(holder.messageSenderPicture);
+            }else{
+                holder.recieverProfileImage.setVisibility(View.VISIBLE);
+                holder.messageReceiverPicture.setVisibility(View.VISIBLE);
+                Picasso.with(holder.messageReceiverPicture.getContext()).load(messages.getMessage()).into(holder.messageReceiverPicture);
+            }
+        }else{
+            if(fromUserID==messageSenderID){
+                holder.messageSenderPicture.setVisibility(View.VISIBLE);
+                holder.messageSenderPicture.setBackgroundResource(R.drawable.file);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent =new Intent(Intent.ACTION_VIEW, Uri.parse(userMessagesList.get(position).getMessage()));
+                        holder.itemView.getContext().startActivity(intent);
+
+                    }
+                });
+            }else{
+                holder.recieverProfileImage.setVisibility(View.VISIBLE);
+                holder.messageReceiverPicture.setVisibility(View.VISIBLE);
+                holder.messageReceiverPicture.setBackgroundResource(R.drawable.file);
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent =new Intent(Intent.ACTION_VIEW, Uri.parse(userMessagesList.get(position).getMessage()));
+                        holder.itemView.getContext().startActivity(intent);
+
+                    }
+                });
             }
         }
 

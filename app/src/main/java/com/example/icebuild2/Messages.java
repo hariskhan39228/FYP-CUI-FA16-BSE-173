@@ -1,18 +1,19 @@
 package com.example.icebuild2;
 
 public class Messages {
-    private String date,message,name,time,type,from;
+    private String date,message,name,time,type,from,messageID;
 
     public Messages(){
     }
 
-    public Messages(String date, String message, String name, String time, String type, String from) {
+    public Messages(String date, String message, String name, String time, String type, String from, String messageID) {
         this.date = date;
         this.message = message;
         this.name = name;
         this.time = time;
         this.type = type;
         this.from = from;
+        this.messageID = messageID;
     }
 
     public String getDate() {
@@ -61,5 +62,13 @@ public class Messages {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
     }
 }
