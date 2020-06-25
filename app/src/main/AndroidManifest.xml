@@ -14,15 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainDrawerActivity"></activity>
-        <activity android:name=".BoardViewActivity"/>
+        <activity android:name=".SetQuizActivity"/>
+        <activity android:name=".MainDrawerActivity" />
+        <activity android:name=".BoardViewActivity" />
         <activity
             android:name=".FindBoardsActivity"
             android:parentActivityName=".StudentActivity" />
         <activity android:name=".DocumentsActivity" />
-        <activity android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".StudentActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />

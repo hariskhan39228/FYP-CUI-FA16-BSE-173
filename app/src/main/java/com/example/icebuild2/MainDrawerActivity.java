@@ -10,15 +10,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainDrawerActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private DrawerLayout drawer;
+    private FirebaseAuth mAuth;
+    private String currentUserEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,12 +33,22 @@ public class MainDrawerActivity extends AppCompatActivity {
         String boardName=getIntent().getStringExtra("BoardName");
         getSupportActionBar().setTitle(boardName);
 
+        mAuth=FirebaseAuth.getInstance();
+        currentUserEmail=mAuth.getCurrentUser().getEmail();
+
         Toast.makeText(this, boardName, Toast.LENGTH_SHORT).show();
         /*TextView navBoardName=(TextView)findViewById(R.id.nav_board_name);
         navBoardName.setText(boardName);*/
 
         drawer=(DrawerLayout)findViewById(R.id.drawer_layout);
         NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
+        if(currentUserEmail.contains("-")){
+            navigationView.inflateMenu(R.menu.drawer_menu_students);
+        }else{
+            navigationView.inflateMenu(R.menu.drawer_menu);
+        }
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -50,6 +64,14 @@ public class MainDrawerActivity extends AppCompatActivity {
                     case R.id.nav_members:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new MembersFragment()).commit();
+                        break;
+                    case R.id.nav_quizzes:
+                        if(currentUserEmail.contains("-")){
+
+                        }else{
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                    new SetQuizFragment()).commit();
+                        }
                         break;
                 }
                 return false;

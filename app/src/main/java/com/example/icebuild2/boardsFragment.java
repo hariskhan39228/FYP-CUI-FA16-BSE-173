@@ -73,7 +73,6 @@ public class boardsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String checkName=dataSnapshot.child("name").getValue().toString();
-                Toast.makeText(getContext(), "Check 1 : "+checkName, Toast.LENGTH_SHORT).show();
                 retrieveAndDisplayBoards(checkName);
             }
 
@@ -106,8 +105,6 @@ public class boardsFragment extends Fragment {
     }
 
     private void retrieveAndDisplayBoards(final String checkName) {
-
-        Toast.makeText(getContext(), "Check 2 : "+checkName, Toast.LENGTH_SHORT).show();
         if (UserType.equals("Teacher")){
             boardRef.addValueEventListener(new ValueEventListener() {
                 @Override

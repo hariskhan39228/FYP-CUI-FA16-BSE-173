@@ -153,12 +153,9 @@ public class DocumentsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Toast.makeText(getContext(), "check 1 into onStart", Toast.LENGTH_SHORT).show();
         rootRef.child("Board Documents").child(currentBoardName).child("messages").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText(getContext(), "check 2 into onStart", Toast.LENGTH_SHORT).show();
-
                 Messages messages = dataSnapshot.getValue(Messages.class);
                 messagesList.add(messages);
                 messageAdapter.notifyDataSetChanged();

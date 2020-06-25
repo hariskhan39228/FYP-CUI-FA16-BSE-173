@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetQuizActivity">
+
+    <EditText
+        android:layout_margin="5dp"
+        android:layout_marginTop="25dp"
+        android:maxLines="6"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/QuestionEditText"
+        android:hint="enter the question here">
+    </EditText>
+        <EditText
+            android:layout_margin="5dp"
+            android:layout_marginTop="25dp"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/Option1EditText"
+            android:hint="enter option 1"
+            android:layout_below="@+id/QuestionEditText"
+            />
+        <EditText
+            android:layout_margin="5dp"
+            android:layout_marginTop="25dp"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/Option2EditText"
+            android:hint="enter option 2"
+            android:layout_below="@+id/Option1EditText"
+            />
+        <EditText
+            android:layout_margin="5dp"
+            android:layout_marginTop="25dp"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/Option3EditText"
+            android:hint="enter option 3"
+            android:layout_below="@+id/Option2EditText"
+            />
+        <EditText
+            android:layout_margin="5dp"
+            android:layout_marginTop="25dp"
+            android:maxLines="6"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/Option4EditText"
+            android:hint="enter option 4"
+            android:layout_below="@+id/Option3EditText"
+            />
+
+    <TextView
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Option4EditText"
+        android:text="Select Correct Answer:"
+        android:textSize="20dp"
+        android:id="@+id/CorrectTextView"/>
+        <RadioGroup
+            android:id="@+id/RadioGroupofSetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/CorrectTextView"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <RadioButton
+                android:id="@+id/optionARadioBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="A"
+                />
+            <RadioButton
+                android:id="@+id/optionBRadioBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="B"
+                />
+            <RadioButton
+                android:id="@+id/optionCRadioBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="C"
+                />
+            <RadioButton
+                android:id="@+id/optionDRadioBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="D"
+                />
+        </RadioGroup>
+    <Button
+        android:id="@+id/setQuestionBtn"
+        android:layout_below="@+id/RadioGroupofSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Next"
+        >
+    </Button>
+
+</RelativeLayout>

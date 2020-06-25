@@ -91,7 +91,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         holder.messageSenderPicture.setVisibility(View.GONE);
 
         if(type.equals("text")){
-            if(fromUserID==messageSenderID){
+            if(fromUserID.equals(messageSenderID)){
                 holder.senderMessageText.setVisibility(View.VISIBLE);
                 holder.senderMessageText.setBackgroundResource(R.drawable.sender_messages_layout);
                 holder.senderMessageText.setText(messages.getMessage()+ "\n \n"+ messages.getDate()+" - "+messages.getTime());
@@ -104,7 +104,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 holder.recieverMessageText.setText(messages.getMessage()+ "\n \n"+ messages.getDate()+" - "+messages.getTime());
             }
         }else if(type.equals("image")){
-            if(fromUserID==messageSenderID){
+            if(fromUserID.equals(messageSenderID)){
                 holder.messageSenderPicture.setVisibility(View.VISIBLE);
                 Picasso.with(holder.messageSenderPicture.getContext()).load(messages.getMessage()).into(holder.messageSenderPicture);
             }else{
@@ -113,7 +113,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 Picasso.with(holder.messageReceiverPicture.getContext()).load(messages.getMessage()).into(holder.messageReceiverPicture);
             }
         }else{
-            if(fromUserID==messageSenderID){
+            if(fromUserID.equals(messageSenderID)){
                 holder.messageSenderPicture.setVisibility(View.VISIBLE);
                 holder.messageSenderPicture.setBackgroundResource(R.drawable.file);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
