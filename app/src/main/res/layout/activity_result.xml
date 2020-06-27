@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ResultActivity">
+    <include
+        layout="@layout/app_bar_layout"
+        android:id="@+id/ResultActivity_toolbar">
+    </include>
+    <TextView
+        android:id="@+id/Statistics_TV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Statistics"
+        android:textAlignment="center"
+        android:textSize="48sp"
+        android:layout_below="@+id/ResultActivity_toolbar"
+        />
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:textAlignment="center"
+        android:textColor="#1b475c"
+        android:textSize="28sp"
+        android:layout_below="@+id/Statistics_TV"
+        />
+    <LinearLayout
+        android:layout_below="@+id/score"
+        android:id="@+id/TotalQuestionLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Questions :"
+            android:textColor="#d4ce2e"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/attempted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFD4CE2E"
+            android:textSize="24sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/TotalQuestionLinearLayout"
+        android:id="@+id/AttemptedQuestionLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correct                          :"
+            android:textColor="#51b364"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/correct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#51b364"
+            android:textSize="24sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/AttemptedQuestionLinearLayout"
+        android:id="@+id/IncorrectQuestionLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incorrect                       :"
+            android:textColor="#e9403d"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/incorrect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#e9403d"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/TakeToHomeFromResult"
+        android:layout_below="@id/IncorrectQuestionLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="4dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:text="Home Page"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textColor="@android:color/background_light"
+        android:background="@drawable/buttons"
+        />
+
+
+
+
+</RelativeLayout>

@@ -69,37 +69,7 @@ public class MembersFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final MembersViewHolder holder, int position, @NonNull Users users) {
                 String userIDs=getRef(position).getKey();
-                { /*usersRef.child(userIDs).addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        final String memberUserName = dataSnapshot.child("name").getValue().toString();
-                        final String memberUserEmail = dataSnapshot.child("email").getValue().toString();
-                        final String memberUserReg = memberUserEmail.substring(0, 12);
-
-                        holder.memberName.setText(memberUserName);
-                        holder.memberReg.setText(memberUserReg);
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });*/}
                 usersRef.child(userIDs).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -110,7 +80,6 @@ public class MembersFragment extends Fragment {
                         final String memberUserName = dataSnapshot.child("name").getValue().toString();
                         final String memberUserEmail = dataSnapshot.child("email").getValue().toString();
                         final String memberUserReg = memberUserEmail.substring(0, 12);
-
                         holder.memberName.setText(memberUserName);
                         holder.memberReg.setText(memberUserReg);
                     }

@@ -4,6 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SetQuizActivity">
+    <include
+        layout="@layout/app_bar_layout"
+        android:id="@+id/SetQuiz_toolbar">
+    </include>
 
     <EditText
         android:layout_margin="5dp"
@@ -12,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/QuestionEditText"
+        android:layout_below="@+id/SetQuiz_toolbar"
         android:hint="enter the question here">
     </EditText>
         <EditText

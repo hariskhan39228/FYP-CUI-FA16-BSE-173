@@ -2,6 +2,7 @@ package com.example.icebuild2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -31,6 +32,7 @@ public class SetQuizActivity extends AppCompatActivity {
     private String currentBoardName;
     private DatabaseReference QuizzesRef;
     private HashMap<String,Object> Questions;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,13 @@ public class SetQuizActivity extends AppCompatActivity {
         noOfQuestions=getIntent().getIntExtra("noOfQuestions",0);
         currentBoardName = getIntent().getStringExtra("BoardName");
         counter=1;
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        mToolbar=(Toolbar)findViewById(R.id.SetQuiz_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Set Quiz for "+currentBoardName);
+        ////////////////////////////////////////////////////////////////////////////////////////////
         QuizzesRef=FirebaseDatabase.getInstance().getReference().child("Board Quizzes").child(currentBoardName);
         initializeFields();
         SetQuestionBtn.setOnClickListener(new View.OnClickListener() {
@@ -115,26 +124,13 @@ public class SetQuizActivity extends AppCompatActivity {
             return;
         }
 
-        /*if(optnA.isSelected()){
-            correctAnswer=optionA;
-        }else if(optnB.isSelected()){
-            correctAnswer=optionB;
-        }else if(optnC.isSelected()){
-            correctAnswer=optionC;
-        }else if(optnD.isSelected()){
-            correctAnswer=optionD;
-        }else{
-            Toast.makeText(this, "Error: Correct option Required", Toast.LENGTH_SHORT).show();
-            return;
-        }*/
-
         HashMap<String,Object> QuestionInfoMap=new HashMap<>();
-        QuestionInfoMap.put("Question",question);
-        QuestionInfoMap.put("Option_1",optionA);
-        QuestionInfoMap.put("Option_2",optionB);
-        QuestionInfoMap.put("Option_3",optionC);
-        QuestionInfoMap.put("Option_4",optionD);
-        QuestionInfoMap.put("Correct_Answer",correctAnswer);
+        QuestionInfoMap.put("question",question);
+        QuestionInfoMap.put("option1",optionA);
+        QuestionInfoMap.put("option2",optionB);
+        QuestionInfoMap.put("option3",optionC);
+        QuestionInfoMap.put("option4",optionD);
+        QuestionInfoMap.put("answer",correctAnswer);
 
         addQuestion(QuestionInfoMap);
     }
@@ -150,8 +146,14 @@ public class SetQuizActivity extends AppCompatActivity {
                     resetFields();
                     counter++;
                     if(counter>noOfQuestions){
-                        Toast.makeText(SetQuizActivity.this, "Quiz Successfully Added.", Toast.LENGTH_SHORT).show();
-                        sendTeacherToTheDrawerActivity();
+                        QuizzesRef.child("Total_Questions").setValue(counter-1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(SetQuizActivity.this, "Quiz Successfully Added.", Toast.LENGTH_SHORT).show();
+                                sendTeacherToTheDrawerActivity();
+                            }
+                        });
+
                     }
 
                 }

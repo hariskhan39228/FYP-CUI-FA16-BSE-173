@@ -6,13 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextClock;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -37,8 +32,6 @@ public class MainDrawerActivity extends AppCompatActivity {
         currentUserEmail=mAuth.getCurrentUser().getEmail();
 
         Toast.makeText(this, boardName, Toast.LENGTH_SHORT).show();
-        /*TextView navBoardName=(TextView)findViewById(R.id.nav_board_name);
-        navBoardName.setText(boardName);*/
 
         drawer=(DrawerLayout)findViewById(R.id.drawer_layout);
         NavigationView navigationView=(NavigationView)findViewById(R.id.nav_view);
@@ -67,10 +60,13 @@ public class MainDrawerActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_quizzes:
                         if(currentUserEmail.contains("-")){
-
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container,
+                                            new AttemptQuizFragment()).commit();
                         }else{
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    new SetQuizFragment()).commit();
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container,
+                                            new SetQuizFragment()).commit();
                         }
                         break;
                 }
