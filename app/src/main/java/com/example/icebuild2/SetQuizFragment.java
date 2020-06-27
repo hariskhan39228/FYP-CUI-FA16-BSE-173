@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,12 +126,23 @@ public class SetQuizFragment extends Fragment {
                 quizResultRef.child(currentBoardName).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(getContext(), "Quiz Result Data Deleted!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Quiz-Result Data Deleted!", Toast.LENGTH_SHORT).show();
+                        resetFragment();
                     }
                 });
             }
         });
     }
+
+    private void resetFragment() {
+        Fragment frg = null;
+        frg = getFragmentManager().findFragmentById(R.id.fragment_container);
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
+    }
+
 
     private void CheckForResults() {
         quizResultRef.addValueEventListener(new ValueEventListener() {
