@@ -122,6 +122,12 @@ public class SetQuizFragment extends Fragment {
                         Toast.makeText(getContext(), "Quiz Deleted!", Toast.LENGTH_SHORT).show();
                     }
                 });
+                quizResultRef.child(currentBoardName).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), "Quiz Result Data Deleted!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }

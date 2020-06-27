@@ -12,14 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import dagger.android.DaggerActivity;
 
 
 /**
@@ -27,10 +27,11 @@ import dagger.android.DaggerActivity;
  */
 public class AttemptQuizFragment extends Fragment {
 
-    private Button AttempQuizBtn;
+    private Button AttemptQuizBtn;
     private TextView QuizStatusTextView;
-    private DatabaseReference quizRef;
+    private DatabaseReference quizRef,quizResultRef;
     private String currentBoardName;
+    private FirebaseAuth mAuth;
 
 
     public AttemptQuizFragment() {
@@ -45,10 +46,12 @@ public class AttemptQuizFragment extends Fragment {
         ////////////////////////////////////////////////////////////////////////////////////////////
         currentBoardName = getActivity().getIntent().getStringExtra("BoardName");
         ////////////////////////////////////////////////////////////////////////////////////////////
-        AttempQuizBtn = (Button)AttemptQuizFragment.findViewById(R.id.attemptQuizBtn);
+        AttemptQuizBtn = (Button)AttemptQuizFragment.findViewById(R.id.attemptQuizBtn);
         QuizStatusTextView=(TextView)AttemptQuizFragment.findViewById(R.id.quiz_Status_TextView);
         ////////////////////////////////////////////////////////////////////////////////////////////
         quizRef=FirebaseDatabase.getInstance().getReference().child("Board Quizzes");
+        quizResultRef= FirebaseDatabase.getInstance().getReference().child("Quiz Results").child(currentBoardName);
+        mAuth=FirebaseAuth.getInstance();
         ////////////////////////////////////////////////////////////////////////////////////////////
         checkQuizStatus();
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,15 +78,16 @@ public class AttemptQuizFragment extends Fragment {
 
     private void setQuizDisabledOptions() {
         QuizStatusTextView.setText("No Quiz Available at the Moment!");
-        AttempQuizBtn.setVisibility(View.INVISIBLE);
-        AttempQuizBtn.setEnabled(false);
+        AttemptQuizBtn.setVisibility(View.INVISIBLE);
+        AttemptQuizBtn.setEnabled(false);
     }
 
     private void setQuizEnabledOptions() {
         QuizStatusTextView.setText("Quiz Available!");
-        AttempQuizBtn.setVisibility(View.VISIBLE);
-        AttempQuizBtn.setEnabled(true);
-        AttempQuizBtn.setOnClickListener(new View.OnClickListener() {
+        AttemptQuizBtn.setVisibility(View.VISIBLE);
+        AttemptQuizBtn.setEnabled(true);
+        checkAttemptStatus();
+        AttemptQuizBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getContext(), AttemptQuizActivity.class);
@@ -91,6 +95,31 @@ public class AttemptQuizFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    private void checkAttemptStatus() {
+        final String currentUserID=mAuth.getCurrentUser().getUid();
+        quizResultRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Toast.makeText(getContext(), currentUserID, Toast.LENGTH_SHORT).show();
+                if(dataSnapshot.child(currentUserID).exists()){
+
+                    disableAttemptButton();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void disableAttemptButton() {
+        QuizStatusTextView.setText("Quiz Performed, No new Quiz Available at the Moment!");
+        AttemptQuizBtn.setVisibility(View.INVISIBLE);
+        AttemptQuizBtn.setEnabled(false);
     }
 
 }
