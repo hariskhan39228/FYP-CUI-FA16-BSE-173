@@ -2,6 +2,14 @@
     <string name="app_name">ICE Build 2</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="agora_app_id">0c263b3ba5554ae0977a87e9fc4ecd03</string>
+
+    <string name="label_channel_name">ss_test</string>
+
+    <string name="label_start_camera">Start sharing your camera</string>
+    <string name="label_stop_camera">Stop sharing your camera</string>
+    <string name="label_start_sharing_your_screen">Start Sharing your screen</string>
+    <string name="label_stop_sharing_your_screen">Stop Sharing your screen</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

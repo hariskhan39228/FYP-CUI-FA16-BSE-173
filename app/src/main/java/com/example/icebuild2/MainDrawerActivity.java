@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -67,6 +69,15 @@ public class MainDrawerActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.fragment_container,
                                             new SetQuizFragment()).commit();
+                        }
+                        break;
+                    case R.id.nav_Lectures:
+                        if(currentUserEmail.contains("-")){
+                            Intent i = new Intent(MainDrawerActivity.this, AudienceActivity.class);
+                            startActivity(i);
+                        }else{
+                            Intent i = new Intent(MainDrawerActivity.this, BroadCastActivity.class);
+                            startActivity(i);
                         }
                         break;
                 }

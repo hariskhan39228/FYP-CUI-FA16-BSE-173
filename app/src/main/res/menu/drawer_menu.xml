@@ -15,6 +15,10 @@
         <item android:id="@+id/nav_quizzes"
             android:icon="@drawable/edit_status"
             android:title="Quizzes"/>
+        <item android:id="@+id/nav_Lectures"
+            android:icon="@drawable/edit_status"
+            android:title="Lecture"/>
+
 
     </group>
 </menu>
