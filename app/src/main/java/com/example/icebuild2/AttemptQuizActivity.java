@@ -57,7 +57,6 @@ public class AttemptQuizActivity extends AppCompatActivity {
                 Toast.makeText(AttemptQuizActivity.this, "Check Counter: "+ max, Toast.LENGTH_SHORT).show();
                 maxCounter=max;
                 updateQuestion(maxCounter);
-                reverseTimer(60, TimerTextView);
             }
 
             @Override
@@ -79,7 +78,7 @@ public class AttemptQuizActivity extends AppCompatActivity {
         TimerTextView =(TextView)findViewById(R.id.Timer_TextView);
     }
     private void updateQuestion(final int maxCounter) {
-        Toast.makeText(AttemptQuizActivity.this, "Check Counter 3: "+ maxCounter, Toast.LENGTH_SHORT).show();
+        reverseTimer(60, TimerTextView);
         computerCount++;
         if(computerCount> maxCounter)
         {
@@ -306,25 +305,37 @@ public class AttemptQuizActivity extends AppCompatActivity {
 
     public void reverseTimer(int Seconds,final TextView tv){
 
-        new CountDownTimer(Seconds* 1000+1000, 1000) {
+
+
+        final CountDownTimer time = new CountDownTimer(Seconds* 1000+1000, 1000) {
+            int seconds=0;
+            int minutes=0;
 
             public void onTick(long millisUntilFinished) {
-                int seconds = (int) (millisUntilFinished / 1000);
-                int minutes = seconds / 60;
+                seconds = (int) (millisUntilFinished / 1000);
+                minutes = seconds / 60;
                 seconds = seconds % 60;
                 tv.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
             }
 
             public void onFinish() {
-                tv.setText("Completed");
-                Intent myIntent = new Intent(AttemptQuizActivity.this,ResultActivity.class);
-                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                myIntent.putExtra("total",String.valueOf(total));
-                myIntent.putExtra("correct",String.valueOf(correct));
-                myIntent.putExtra("incorrect",String.valueOf(wrong));
-                startActivity(myIntent);
+                if(!(computerCount>maxCounter)) {
+                    tv.setText("Completed");
+                    Intent myIntent = new Intent(AttemptQuizActivity.this, ResultActivity.class);
+                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    myIntent.putExtra("total", String.valueOf(total));
+                    myIntent.putExtra("correct", String.valueOf(correct));
+                    myIntent.putExtra("incorrect", String.valueOf(wrong));
+                    myIntent.putExtra("BoardName",currentBoardName);
+                    startActivity(myIntent);
+                }
             }
-        }.start();
+        };
+        time.cancel();
+        time.start();
+        if(computerCount>maxCounter){
+            time.cancel();
+        }
     }
 }

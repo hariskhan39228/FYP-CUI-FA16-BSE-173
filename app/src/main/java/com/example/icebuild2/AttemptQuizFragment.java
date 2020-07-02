@@ -102,7 +102,6 @@ public class AttemptQuizFragment extends Fragment {
         quizResultRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(getContext(), currentUserID, Toast.LENGTH_SHORT).show();
                 if(dataSnapshot.child(currentUserID).exists()){
 
                     disableAttemptButton();
